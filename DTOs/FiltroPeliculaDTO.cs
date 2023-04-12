@@ -20,5 +20,8 @@
         public bool EnCines { get; set; }
         public bool ProximosEstrenos { get; set; }
 
+        public string CampoOrdenar { get; set; }
+        public bool OrdenAScendente { get; set; } = true;
+
     }
 }
