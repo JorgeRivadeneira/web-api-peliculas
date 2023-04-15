@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using PeliculasAPI.Entidades;
 
 namespace PeliculasAPI.Data
@@ -30,29 +32,29 @@ namespace PeliculasAPI.Data
         private void SeedData(ModelBuilder modelBuilder)
         {
 
-            var rolAdminId = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d";
-            var usuarioAdminId = "5673b8cf-12de-44f6-92ad-fae4a77932ad";
+            //var rolAdminId = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d";
+            //var usuarioAdminId = "5673b8cf-12de-44f6-92ad-fae4a77932ad";
 
-            var rolAdmin = new IdentityRole()
-            {
-                Id = rolAdminId,
-                Name = "Admin",
-                NormalizedName = "Admin"
-            };
+            //var rolAdmin = new IdentityRole()
+            //{
+            //    Id = rolAdminId,
+            //    Name = "Admin",
+            //    NormalizedName = "Admin"
+            //};
 
-            var passwordHasher = new PasswordHasher<IdentityUser>();
+            //var passwordHasher = new PasswordHasher<IdentityUser>();
 
-            var username = "felipe@hotmail.com";
+            //var username = "felipe@hotmail.com";
 
-            var usuarioAdmin = new IdentityUser()
-            {
-                Id = usuarioAdminId,
-                UserName = username,
-                NormalizedUserName = username,
-                Email = username,
-                NormalizedEmail = username,
-                PasswordHash = passwordHasher.HashPassword(null, "Aa123456!")
-            };
+            //var usuarioAdmin = new IdentityUser()
+            //{
+            //    Id = usuarioAdminId,
+            //    UserName = username,
+            //    NormalizedUserName = username,
+            //    Email = username,
+            //    NormalizedEmail = username,
+            //    PasswordHash = passwordHasher.HashPassword(null, "Aa123456!")
+            //};
 
             //var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
@@ -60,9 +62,9 @@ namespace PeliculasAPI.Data
             //   .HasData(new List<SalaDeCine>
             //   {
             //        //new SalaDeCine{Id = 1, Nombre = "Agora", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.9388777, 18.4839233))},
-            //        new SalaDeCine{Id = 4, Nombre = "Sambil", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.9118804, 18.4826214))},
-            //        new SalaDeCine{Id = 5, Nombre = "Megacentro", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-69.856427, 18.506934))},
-            //        new SalaDeCine{Id = 6, Nombre = "Village East Cinema", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-73.986227, 40.730898))}
+            //        new SalaDeCine{Id = 2, Nombre = "Super Cines", Ubicacion = geometryFactory.CreatePoint(new Coordinate(0.0210616, -78.9732008))},
+            //        new SalaDeCine{Id = 1, Nombre = "Multicines", Ubicacion = geometryFactory.CreatePoint(new Coordinate(-0.0210609, -78.9732054))},
+            //        new SalaDeCine{Id = 4, Nombre = "Star Cines", Ubicacion = geometryFactory.CreatePoint(new Coordinate(0.3491438, -78.1278624))}
             //   });
 
             var aventura = new Genero() { Id = 4, Nombre = "Aventura" };
