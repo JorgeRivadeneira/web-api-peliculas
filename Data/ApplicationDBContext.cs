@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using PeliculasAPI.Entidades;
+using System.Security.Claims;
 
 namespace PeliculasAPI.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext
     {
         public ApplicationDBContext(DbContextOptions options) : base(options)
         {
@@ -32,29 +34,44 @@ namespace PeliculasAPI.Data
         private void SeedData(ModelBuilder modelBuilder)
         {
 
-            //var rolAdminId = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d";
-            //var usuarioAdminId = "5673b8cf-12de-44f6-92ad-fae4a77932ad";
+            var rolAdminId = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d";
+            var usuarioAdminId = "5673b8cf-12de-44f6-92ad-fae4a77932ad";
 
-            //var rolAdmin = new IdentityRole()
-            //{
-            //    Id = rolAdminId,
-            //    Name = "Admin",
-            //    NormalizedName = "Admin"
-            //};
+            var rolAdmin = new IdentityRole()
+            {
+                Id = rolAdminId,
+                Name = "Admin",
+                NormalizedName = "Admin"
+            };
 
-            //var passwordHasher = new PasswordHasher<IdentityUser>();
+            var passwordHasher = new PasswordHasher<IdentityUser>();
 
-            //var username = "felipe@hotmail.com";
+            var username = "jorge@gmail.com";
 
-            //var usuarioAdmin = new IdentityUser()
-            //{
-            //    Id = usuarioAdminId,
-            //    UserName = username,
-            //    NormalizedUserName = username,
-            //    Email = username,
-            //    NormalizedEmail = username,
-            //    PasswordHash = passwordHasher.HashPassword(null, "Aa123456!")
-            //};
+            var usuarioAdmin = new IdentityUser()
+            {
+                Id = usuarioAdminId,
+                UserName = username,
+                NormalizedUserName = username,
+                Email = username,
+                NormalizedEmail = username,
+                PasswordHash = passwordHasher.HashPassword(null, "Aa123456!")
+            };
+
+            modelBuilder.Entity<IdentityUser>()
+                .HasData(usuarioAdmin);
+
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(rolAdmin);
+
+            modelBuilder.Entity<IdentityUserClaim<string>>()
+                .HasData(new IdentityUserClaim<string>()
+                {
+                    Id = 1,
+                    ClaimType = ClaimTypes.Role,
+                    UserId = usuarioAdminId,
+                    ClaimValue = "Admin"
+                });
 
             //var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
 
