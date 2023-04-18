@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using PeliculasAPI.Data;
+using PeliculasAPI.Entidades;
 using PeliculasAPI.Helpers;
 using PeliculasAPI.Servicios;
 using System.Text;
@@ -29,6 +30,8 @@ namespace PeliculasAPI
             services.AddHttpContextAccessor();
 
             services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
+
+            services.AddScoped<PeliculaExisteAttribute>();
 
             services.AddSingleton(provider =>
                 new MapperConfiguration(config =>
