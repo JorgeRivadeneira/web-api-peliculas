@@ -10,7 +10,17 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Archivos varios",
       "ColorIndex": -1
+    },
+    "5a1892d1-12c6-4937-828c-d44d41610926": {
+      "ProjectGuid": "5a1892d1-12c6-4937-828c-d44d41610926",
+      "DisplayName": "PeliculasAPI.Tests",
+      "ColorIndex": 1
+    },
+    "e79dd524-066a-4ed7-b430-1c33c503950a": {
+      "ProjectGuid": "e79dd524-066a-4ed7-b430-1c33c503950a",
+      "DisplayName": "PeliculasAPI.Tests",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 3
 }
