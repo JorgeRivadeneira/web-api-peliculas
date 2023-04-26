@@ -6,6 +6,7 @@
 	<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsPackable>false</IsPackable>
+	<PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,6 @@
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.12" />
-    <Folder Include="PruebasUnitarias\" />
   </ItemGroup>
 
   <ItemGroup>

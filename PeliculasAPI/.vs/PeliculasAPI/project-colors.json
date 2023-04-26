@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "de94b150-ab21-4aef-a700-c7e651cf3662": {
+      "ProjectGuid": "de94b150-ab21-4aef-a700-c7e651cf3662",
+      "DisplayName": "PeliculasAPI.Tests",
+      "ColorIndex": 0
+    },
+    "08f10255-c0ff-43af-8b7b-00a04b53c23b": {
+      "ProjectGuid": "08f10255-c0ff-43af-8b7b-00a04b53c23b",
+      "DisplayName": "PeliculasAPI",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
