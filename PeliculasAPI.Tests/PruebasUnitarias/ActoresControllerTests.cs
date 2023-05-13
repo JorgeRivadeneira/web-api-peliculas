@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.JsonPatch.Operations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -17,7 +20,7 @@ using System.Threading.Tasks;
 namespace PeliculasAPI.Tests.PruebasUnitarias
 {
     [TestClass]
-    public class ActoresControllerTests: BasePruebas
+    public class ActoresControllerTests : BasePruebas
     {
         [TestMethod]
         public async Task ObtenerPersonasPaginadas()
@@ -109,6 +112,54 @@ namespace PeliculasAPI.Tests.PruebasUnitarias
             Assert.AreEqual(1, listado.Count);
             Assert.AreEqual("url", listado[0].Foto);
             Assert.AreEqual(1, mock.Invocations.Count);
+        }
+
+        [TestMethod]
+        public async Task PatchRetorna404SiActorNoExiste()
+        {
+            var nombreBD = Guid.NewGuid().ToString();
+            var contexto = ConstruirContext(nombreBD);
+            var mapper = ConfigurarAutoMapper();
+
+            var controller = new ActoresController(contexto, mapper, null);
+            var patchDoc = new JsonPatchDocument<ActorPatchDTO>();
+            var respuesta = await controller.Patch(1, patchDoc);
+            var resultado = respuesta as StatusCodeResult;
+            Assert.AreEqual(404, resultado?.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task PatchActualizaUnSoloCampo()
+        {
+            var nombreBD = Guid.NewGuid().ToString();
+            var contexto = ConstruirContext(nombreBD);
+            var mapper = ConfigurarAutoMapper();
+
+            var fechaNacimiento = DateTime.Now;
+            var actor = new Actor() { Nombre = "Jorge", FechaNacimiento = fechaNacimiento };
+            contexto.Add(actor);
+            await contexto.SaveChangesAsync();
+
+            var contexto2 = ConstruirContext(nombreBD);
+            var controller = new ActoresController(contexto2, mapper, null);
+
+            var objectValidator = new Mock<IObjectModelValidator>();
+            objectValidator.Setup(x => x.Validate(It.IsAny<ActionContext>(),
+                It.IsAny<ValidationStateDictionary>(),
+                It.IsAny<string>(),
+                It.IsAny<object>));
+            controller.ObjectValidator = objectValidator.Object;
+
+            var patchDoc = new JsonPatchDocument<ActorPatchDTO>();
+            patchDoc.Operations.Add(new Operation<ActorPatchDTO>("replace", "/nombre", null, "Claudia"));
+            var respuesta = await controller.Patch(1, patchDoc);
+            var resultado = respuesta as StatusCodeResult;
+            Assert.AreEqual(204, resultado.StatusCode);
+
+            var contexto3 = ConstruirContext(nombreBD);
+            var actorDB = await contexto3.Actores.FirstAsync();
+            Assert.AreEqual("Claudia", actorDB.Nombre);
+            Assert.AreEqual(fechaNacimiento, actorDB.FechaNacimiento);
         }
     }
 }
